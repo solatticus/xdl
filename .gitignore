@@ -198,6 +198,10 @@ paket-files/
 # publish folder
 publish/
 
+# Extension build output
+dist/
+extension/icons/*.png
+
 # macOS
 .DS_Store
 
@@ -211,3 +215,6 @@ twitter_response.json
 
 # Downloaded videos (for testing)
 *.mp4
+
+# Local settings that shouldn't be shared
+.claude/settings.local.json
