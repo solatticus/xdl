@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet new:*)",
+      "Bash(dotnet build)",
+      "Bash(dotnet publish:*)",
+      "Bash(mv:*)",
+      "Bash(ls:*)",
+      "Bash(./xdn.exe https://x.com/falsely_flagged/status/1926668481430179990)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
