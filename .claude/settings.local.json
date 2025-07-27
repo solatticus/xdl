@@ -12,7 +12,10 @@
       "Bash(git commit:*)",
       "Bash(git remote add:*)",
       "Bash(git push:*)",
-      "Bash(dotnet sln:*)"
+      "Bash(dotnet sln:*)",
+      "Bash(./xdn.exe https://x.com/realsnozilla/status/1949325660780200171)",
+      "Bash(mkdir:*)",
+      "Bash(powershell:*)"
     ],
     "deny": []
   }

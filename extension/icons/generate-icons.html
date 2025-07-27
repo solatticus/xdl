@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate Extension Icons</title>
+</head>
+<body>
+  <h1>XDL Icon Generator</h1>
+  <p>Right-click and save each icon:</p>
+  
+  <canvas id="icon-16" width="16" height="16"></canvas>
+  <canvas id="icon-32" width="32" height="32"></canvas>
+  <canvas id="icon-48" width="48" height="48"></canvas>
+  <canvas id="icon-128" width="128" height="128"></canvas>
+  
+  <script>
+    // Create icons programmatically
+    const sizes = [16, 32, 48, 128];
+    
+    sizes.forEach(size => {
+      const canvas = document.getElementById(`icon-${size}`);
+      const ctx = canvas.getContext('2d');
+      
+      // Background
+      ctx.fillStyle = '#1DA1F2';
+      ctx.fillRect(0, 0, size, size);
+      
+      // Download arrow
+      ctx.fillStyle = 'white';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = size / 8;
+      ctx.lineCap = 'round';
+      
+      // Arrow shaft
+      ctx.beginPath();
+      ctx.moveTo(size / 2, size * 0.2);
+      ctx.lineTo(size / 2, size * 0.6);
+      ctx.stroke();
+      
+      // Arrow head
+      ctx.beginPath();
+      ctx.moveTo(size * 0.3, size * 0.4);
+      ctx.lineTo(size / 2, size * 0.6);
+      ctx.lineTo(size * 0.7, size * 0.4);
+      ctx.stroke();
+      
+      // Base line
+      ctx.beginPath();
+      ctx.moveTo(size * 0.2, size * 0.8);
+      ctx.lineTo(size * 0.8, size * 0.8);
+      ctx.stroke();
+      
+      // Add download link
+      const link = document.createElement('a');
+      link.download = `icon-${size}.png`;
+      link.href = canvas.toDataURL();
+      link.textContent = ` Download ${size}x${size}`;
+      canvas.parentNode.insertBefore(link, canvas.nextSibling);
+      canvas.parentNode.insertBefore(document.createElement('br'), link.nextSibling);
+      canvas.parentNode.insertBefore(document.createElement('br'), link.nextSibling);
+    });
+  </script>
+</body>
+</html>

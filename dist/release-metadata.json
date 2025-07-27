@@ -1,0 +1,12 @@
+{
+    "date":  "2025-07-27",
+    "files":  [
+                  "xdl-extension-v1.0.0.zip",
+                  "INSTALL-HELPER.bat"
+              ],
+    "version":  "1.0.0",
+    "sha256":  {
+                   "INSTALL-HELPER.bat":  "871c2172731dee88f89c78d391ce5f3be4620ab0a58b4f734e559e678964e87d",
+                   "xdl-extension-v1.0.0.zip":  "7ba965219a0ee043d4e3a7e7fb0dd41abb26963afe7aa079c0e311ee8563fced"
+               }
+}

@@ -1,0 +1,147 @@
+/**
+ * Styles for injected download buttons
+ * Designed to match Twitter/X's UI
+ */
+
+/* Main download button in tweet actions */
+.xdl-button-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 12px;
+}
+
+.xdl-download-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 9999px;
+  background: transparent;
+  color: rgb(83, 100, 113);
+  font-size: 13px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.xdl-download-button:hover:not(:disabled) {
+  background: rgba(29, 155, 240, 0.1);
+  color: rgb(29, 155, 240);
+}
+
+.xdl-download-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.xdl-download-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Spinner animation */
+@keyframes xdl-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.xdl-spinner {
+  animation: xdl-spin 1s linear infinite;
+}
+
+/* Floating button on video */
+.xdl-float-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.75);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+  z-index: 10;
+}
+
+.xdl-float-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+[data-testid="videoPlayer"] {
+  position: relative;
+}
+
+/* Mini button for timeline */
+.xdl-mini-wrapper {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+}
+
+.xdl-mini-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: rgb(83, 100, 113);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.xdl-mini-button:hover {
+  background: rgba(29, 155, 240, 0.1);
+  color: rgb(29, 155, 240);
+}
+
+.xdl-mini-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .xdl-download-button {
+    color: rgb(139, 152, 165);
+  }
+  
+  .xdl-download-button:hover:not(:disabled) {
+    background: rgba(29, 155, 240, 0.2);
+    color: rgb(29, 155, 240);
+  }
+  
+  .xdl-mini-button {
+    color: rgb(139, 152, 165);
+  }
+  
+  .xdl-mini-button:hover {
+    background: rgba(29, 155, 240, 0.2);
+    color: rgb(29, 155, 240);
+  }
+}
+
+/* Match Twitter's exact theme colors */
+[data-theme="light"] .xdl-download-button,
+[data-theme="light"] .xdl-mini-button {
+  color: rgb(83, 100, 113);
+}
+
+[data-theme="dim"] .xdl-download-button,
+[data-theme="dim"] .xdl-mini-button,
+[data-theme="dark"] .xdl-download-button,
+[data-theme="dark"] .xdl-mini-button {
+  color: rgb(139, 152, 165);
+}

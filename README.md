@@ -37,20 +37,32 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/xdn.git
-cd xdn
+git clone https://github.com/solatticus/xdl.git
+cd xdl
 
-# Build the project
-cd src
+# Build the project (from root, we have a solution file!)
 dotnet build -c Release
 
 # Create a self-contained executable
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ../publish
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish
 ```
 
+**📁 Output:** Your executable will be at: `publish/xdn.exe`
+
 For other platforms:
-- Linux: `-r linux-x64`
-- macOS: `-r osx-x64` (or `osx-arm64` for Apple Silicon)
+- **Linux**: `-r linux-x64` → `publish/xdn`
+- **macOS Intel**: `-r osx-x64` → `publish/xdn`
+- **macOS Apple Silicon**: `-r osx-arm64` → `publish/xdn`
+
+### Quick Build Commands
+
+```bash
+# Windows
+dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -o publish && echo "✓ Built: publish\xdn.exe"
+
+# Linux/macOS
+dotnet publish -c Release -r linux-x64 --self-contained -p:PublishSingleFile=true -o publish && echo "✓ Built: publish/xdn"
+```
 
 ## 📖 Usage
 

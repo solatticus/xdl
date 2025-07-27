@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>XDL - Video Downloader</title>
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img src="icons/icon-48.png" alt="XDL">
+      <h1>XDL</h1>
+    </header>
+    
+    <div class="quick-download">
+      <input type="text" id="urlInput" placeholder="Paste Twitter/X video URL here">
+      <button id="downloadBtn" class="primary-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+        Download
+      </button>
+    </div>
+    
+    <div class="tabs">
+      <button class="tab active" data-tab="current">Current Page</button>
+      <button class="tab" data-tab="history">History</button>
+      <button class="tab" data-tab="settings">Settings</button>
+    </div>
+    
+    <div class="tab-content" id="current-tab">
+      <div id="current-status" class="status-message">
+        <!-- Dynamic content -->
+      </div>
+      <div id="video-list" class="video-list">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+    
+    <div class="tab-content" id="history-tab" style="display: none;">
+      <div class="history-list">
+        <p class="empty-message">Download history coming soon!</p>
+      </div>
+    </div>
+    
+    <div class="tab-content" id="settings-tab" style="display: none;">
+      <div class="settings">
+        <label class="setting">
+          <span>Default Quality</span>
+          <select id="quality-select">
+            <option value="high">High (Best Available)</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low (Data Saver)</option>
+          </select>
+        </label>
+        
+        <label class="setting">
+          <span>Show floating button on videos</span>
+          <input type="checkbox" id="float-toggle" checked>
+        </label>
+        
+        <label class="setting">
+          <span>Show download button in timeline</span>
+          <input type="checkbox" id="timeline-toggle" checked>
+        </label>
+        
+        <label class="setting">
+          <span>Show notifications</span>
+          <input type="checkbox" id="notif-toggle" checked>
+        </label>
+      </div>
+    </div>
+    
+    <footer>
+      <a href="https://github.com/solatticus/xdl" target="_blank">GitHub</a>
+      <span>•</span>
+      <a href="#" id="help-link">Help</a>
+      <span>•</span>
+      <span>v1.0.0</span>
+    </footer>
+  </div>
+  
+  <script src="scripts/popup.js"></script>
+</body>
+</html>

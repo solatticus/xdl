@@ -1,0 +1,41 @@
+# XDL Extension Installation Guide
+
+## Quick Install
+
+1. Extract this folder to a permanent location
+   Example: C:\Tools\xdl-extension\
+
+2. Open Chrome or Edge
+
+3. Navigate to:
+   - Chrome: chrome://extensions/
+   - Edge: edge://extensions/
+
+4. Enable "Developer mode" (toggle in top right)
+
+5. Click "Load unpacked"
+
+6. Select this folder (xdl-extension-v1.0.0)
+
+7. The extension icon will appear in your toolbar
+
+## Usage
+
+- Visit any Twitter/X video post
+- Click the Download button that appears
+- Or right-click and select "Download X Video"
+- Or click the extension icon for more options
+
+## Important Notes
+
+- Do NOT delete this folder after installation
+- The browser needs these files to run the extension
+- To update: Download new version and repeat steps 5-6
+
+## Troubleshooting
+
+If the extension stops working:
+1. Go to chrome://extensions/
+2. Find XDL and click "Reload"
+
+For more help: https://github.com/solatticus/xdl
