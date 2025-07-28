@@ -16,9 +16,13 @@ const activeDownloads = new Map();
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: 'download-video',
-    title: 'Download X Video',
+    title: 'Download Video with XDL',
     contexts: ['page', 'video', 'image'],
-    documentUrlPatterns: ['*://twitter.com/*', '*://x.com/*']
+    documentUrlPatterns: [
+      '*://twitter.com/*', '*://x.com/*',
+      '*://youtube.com/*', '*://youtu.be/*',
+      '*://rumble.com/*'
+    ]
   });
   
   chrome.contextMenus.create({
@@ -40,21 +44,47 @@ chrome.runtime.onInstalled.addListener(() => {
 chrome.contextMenus.onClicked.addListener(async (info, tab) => {
   const quality = info.menuItemId === 'download-hd' ? 'high' : 'low';
   
-  // Extract tweet URL
-  const tweetMatch = tab.url.match(/\/status\/(\d+)/);
-  if (!tweetMatch) {
-    showNotification('Invalid URL', 'This doesn\'t appear to be a tweet with video.');
+  // Detect platform
+  let platform = null;
+  let videoId = null;
+  
+  if (tab.url.includes('twitter.com') || tab.url.includes('x.com')) {
+    platform = 'twitter';
+    const match = tab.url.match(/\/status\/(\d+)/);
+    if (!match) {
+      showNotification('Invalid URL', 'Navigate to a Twitter/X video post.');
+      return;
+    }
+    videoId = match[1];
+  } else if (tab.url.includes('youtube.com') || tab.url.includes('youtu.be')) {
+    platform = 'youtube';
+    showNotification('YouTube Info', 'YouTube requires yt-dlp. Use: xdl "' + tab.url + '"');
+    return;
+  } else if (tab.url.includes('rumble.com')) {
+    platform = 'rumble';
+    showNotification('Rumble Info', 'Use XDL command line: xdl "' + tab.url + '"');
     return;
   }
   
-  const tweetId = tweetMatch[1];
-  await downloadVideo(tweetId, tab.url, quality);
+  if (platform && videoId) {
+    await downloadVideo(videoId, tab.url, platform, quality);
+  }
 });
 
 // Listen for messages from content script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === 'download') {
-    downloadVideo(request.tweetId, request.url, request.quality)
+    // Handle different platforms
+    if (request.platform === 'youtube') {
+      // For YouTube, just show instructions since it needs yt-dlp
+      showNotification('YouTube Download', 'Use XDL command line with yt-dlp installed');
+      sendResponse({ error: 'YouTube requires yt-dlp. Use command line: xdl "' + request.url + '"' });
+      return true;
+    }
+    
+    // For Twitter and Rumble, use the download function
+    const videoId = request.videoId || request.tweetId; // Support both old and new format
+    downloadVideo(videoId, request.url, request.platform || 'twitter', request.quality)
       .then(result => sendResponse(result))
       .catch(error => sendResponse({ error: error.message }));
     return true; // Keep channel open for async response
@@ -69,51 +99,69 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 /**
- * Main download function using syndication API
+ * Main download function supporting multiple platforms
  */
-async function downloadVideo(tweetId, tweetUrl, quality = 'high') {
+async function downloadVideo(videoId, videoUrl, platform = 'twitter', quality = 'high') {
   try {
     // Check if already downloading
-    if (activeDownloads.has(tweetId)) {
+    if (activeDownloads.has(videoId)) {
       showNotification('Already Downloading', 'This video is already being downloaded.');
       return { error: 'Already downloading' };
     }
     
     // Add to active downloads
-    activeDownloads.set(tweetId, {
-      tweetId,
-      url: tweetUrl,
+    activeDownloads.set(videoId, {
+      videoId,
+      url: videoUrl,
+      platform,
       status: 'fetching',
       progress: 0
     });
     
-    // Fetch video URL using syndication API
-    const videoUrl = await fetchVideoUrl(tweetId);
+    let downloadUrl = null;
+    let filename = '';
     
-    if (!videoUrl) {
-      activeDownloads.delete(tweetId);
-      showNotification('No Video Found', 'Could not find a video in this tweet.');
+    // Platform-specific handling
+    switch (platform) {
+      case 'twitter':
+        downloadUrl = await fetchVideoUrl(videoId);
+        filename = `twitter_video_${videoId}.mp4`;
+        break;
+        
+      case 'rumble':
+        // For Rumble, we can't easily extract from extension
+        // Direct user to use CLI
+        activeDownloads.delete(videoId);
+        showNotification('Rumble Download', 'Use XDL command line for Rumble videos');
+        return { error: 'Rumble videos require XDL CLI. Use: xdl "' + videoUrl + '"' };
+        
+      default:
+        activeDownloads.delete(videoId);
+        return { error: 'Unsupported platform' };
+    }
+    
+    if (!downloadUrl) {
+      activeDownloads.delete(videoId);
+      showNotification('No Video Found', 'Could not find a video URL.');
       return { error: 'No video found' };
     }
     
     // Start download
-    const filename = `twitter_video_${tweetId}.mp4`;
-    
     chrome.downloads.download({
-      url: videoUrl,
+      url: downloadUrl,
       filename: filename,
       saveAs: false
     }, (downloadId) => {
       if (chrome.runtime.lastError) {
-        activeDownloads.delete(tweetId);
+        activeDownloads.delete(videoId);
         showNotification('Download Failed', chrome.runtime.lastError.message);
         return;
       }
       
       // Track download progress
-      activeDownloads.set(tweetId, {
-        tweetId,
-        url: tweetUrl,
+      activeDownloads.set(videoId, {
+        videoId,
+        url: videoUrl,
         downloadId,
         status: 'downloading',
         progress: 0
@@ -122,10 +170,10 @@ async function downloadVideo(tweetId, tweetUrl, quality = 'high') {
       showNotification('Download Started', `Downloading ${filename}`);
     });
     
-    return { success: true, videoUrl };
+    return { success: true, videoUrl: downloadUrl };
     
   } catch (error) {
-    activeDownloads.delete(tweetId);
+    activeDownloads.delete(videoId);
     console.error('Download error:', error);
     showNotification('Download Error', error.message);
     return { error: error.message };

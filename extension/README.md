@@ -1,6 +1,6 @@
 # XDL Browser Extension
 
-A browser extension for downloading videos from X/Twitter with a single click.
+A browser extension for downloading videos from multiple platforms including Twitter/X, YouTube, and Rumble.
 
 ## ⚠️ Important Notice
 
@@ -11,15 +11,17 @@ This extension is for **personal use only** and will likely be rejected from off
 
 ## Features
 
-- 🎯 **One-Click Download** - Download button integrated into Twitter/X UI
+- 🌐 **Multi-Platform Support**:
+  - **Twitter/X** - Direct download with quality selection
+  - **YouTube** - Instructions for using with yt-dlp
+  - **Rumble** - CLI integration guidance
+- 🎯 **One-Click Download** - Download button integrated into supported sites
 - 📊 **Quality Selection** - Choose video quality (when available)
-- 🎨 **Native UI** - Matches Twitter/X's design perfectly
-- 🌙 **Dark Mode** - Automatic theme detection
+- 🎨 **Native UI** - Clean, modern interface
 - 📍 **Multiple Access Points**:
-  - Download button in tweet actions
-  - Floating button on videos
+  - Extension popup for any video URL
   - Right-click context menu
-  - Extension popup for quick downloads
+  - Automatic detection on supported sites
 - 🔔 **Download Notifications** - Get notified when downloads complete
 
 ## Installation (Developer Mode)

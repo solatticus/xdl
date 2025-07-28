@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "XDL - X/Twitter Video Downloader",
-  "version": "1.0.0",
-  "description": "Download videos from X/Twitter with a single click. Features quality selection, batch downloading, and download history.",
+  "name": "XDL - Video Downloader",
+  "version": "2.0.0",
+  "description": "Download videos from Twitter/X, YouTube, and Rumble. Features quality selection and multi-platform support.",
   "author": "XDL Contributors",
   
   "permissions": [
@@ -17,7 +17,11 @@
     "*://twitter.com/*",
     "*://x.com/*",
     "*://cdn.syndication.twimg.com/*",
-    "*://video.twimg.com/*"
+    "*://video.twimg.com/*",
+    "*://youtube.com/*",
+    "*://www.youtube.com/*",
+    "*://youtu.be/*",
+    "*://rumble.com/*"
   ],
   
   "background": {

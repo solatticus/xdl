@@ -15,7 +15,17 @@
       "Bash(dotnet sln:*)",
       "Bash(./xdn.exe https://x.com/realsnozilla/status/1949325660780200171)",
       "Bash(mkdir:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(cp:*)",
+      "Bash(./xdl.exe)",
+      "Bash(./xdl.exe https://x.com/realsnozilla/status/1949325660780200171)",
+      "Bash(./xdl.exe https://rumble.com/v5z7cix-test-video.html)",
+      "Bash(./xdl.exe https://rumble.com/v2h8qwe-example.html)",
+      "Bash(./xdl.exe https://youtube.com/watch?v=dQw4w9WgXcQ)",
+      "Bash(where:*)",
+      "Bash(C:\\Users\\solat\\AppData\\Local\\Microsoft\\WinGet\\Links\\yt-dlp.exe --version)",
+      "Bash(cmd:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

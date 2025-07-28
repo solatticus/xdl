@@ -1,17 +1,17 @@
-# 🎬 XDN - X/Twitter Video Downloader
+# 🎬 XDL - Universal Video Downloader
 
 <div align="center">
   
   [![.NET](https://img.shields.io/badge/.NET-9.0-512BD4?style=for-the-badge&logo=dotnet)](https://dotnet.microsoft.com/)
-  [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue?style=for-the-badge)](https://github.com/yourusername/xdn)
+  [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-blue?style=for-the-badge)](https://github.com/solatticus/xdl)
   [![License](https://img.shields.io/badge/License-Unlicense-green?style=for-the-badge)](LICENSE)
   
   <p align="center">
-    <strong>A fast, modern command-line tool to download videos from X (formerly Twitter)</strong>
+    <strong>A fast, modern command-line tool to download videos from multiple platforms</strong>
   </p>
   
   <p align="center">
-    Built with the latest .NET stream APIs for efficient, cross-platform video downloading
+    Supports X/Twitter, Rumble, and YouTube • Built with the latest .NET stream APIs
   </p>
 
 </div>
@@ -20,12 +20,14 @@
 
 ## ✨ Features
 
+- 🌐 **Multi-Platform Support** - Download from X/Twitter, Rumble, and YouTube
 - 🚀 **Fast Downloads** - Uses modern async streams for optimal performance
 - 📊 **Progress Tracking** - Real-time download progress with speed stats
 - 🎯 **Smart Detection** - Automatically finds the highest quality video available
 - 🖥️ **Cross-Platform** - Works on Windows, macOS, and Linux
 - 📁 **Auto-Save** - Downloads directly to your system's Downloads folder
 - 🔧 **Simple CLI** - Clean command-line interface with minimal setup
+- 🎨 **Interactive Mode** - User-friendly interface for easy video downloading
 
 ## 🛠️ Installation
 
@@ -44,24 +46,25 @@ cd xdl
 dotnet build -c Release
 
 # Create a self-contained executable
-dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish
+cd src
+dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
 ```
 
-**📁 Output:** Your executable will be at: `publish/xdn.exe`
+**📁 Output:** Your executable will be at: `src/bin/Release/net9.0/win-x64/publish/Xdl.exe`
 
 For other platforms:
-- **Linux**: `-r linux-x64` → `publish/xdn`
-- **macOS Intel**: `-r osx-x64` → `publish/xdn`
-- **macOS Apple Silicon**: `-r osx-arm64` → `publish/xdn`
+- **Linux**: `-r linux-x64` → `Xdl`
+- **macOS Intel**: `-r osx-x64` → `Xdl`
+- **macOS Apple Silicon**: `-r osx-arm64` → `Xdl`
 
 ### Quick Build Commands
 
 ```bash
 # Windows
-dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -o publish && echo "✓ Built: publish\xdn.exe"
+cd src && dotnet publish -c Release -r win-x64 --self-contained -p:PublishSingleFile=true
 
 # Linux/macOS
-dotnet publish -c Release -r linux-x64 --self-contained -p:PublishSingleFile=true -o publish && echo "✓ Built: publish/xdn"
+cd src && dotnet publish -c Release -r linux-x64 --self-contained -p:PublishSingleFile=true
 ```
 
 ## 📖 Usage
@@ -70,31 +73,46 @@ dotnet publish -c Release -r linux-x64 --self-contained -p:PublishSingleFile=tru
 
 ```bash
 # Download a video by URL
-xdn https://x.com/user/status/1234567890123456789
+xdl https://x.com/user/status/1234567890123456789
+xdl https://rumble.com/v2h8qwe-example-video.html
+xdl https://youtube.com/watch?v=dQw4w9WgXcQ
 
 # Or use the --url flag
-xdn --url https://x.com/user/status/1234567890123456789
+xdl --url https://x.com/user/status/1234567890123456789
 ```
 
 ### Interactive Mode
 
 ```bash
 # Run without arguments for interactive mode
-xdn
+xdl
 
-X/Twitter Video Downloader
-==========================
+╔═══════════════════════════════════════╗
+║        XDL - Video Downloader         ║
+║                                       ║
+║  Supported platforms:                 ║
+║  • X/Twitter                          ║
+║  • Rumble                             ║
+║  • YouTube (requires yt-dlp)          ║
+╚═══════════════════════════════════════╝
 
-Enter Twitter/X video URL (or 'quit' to exit): https://x.com/user/status/123...
+Enter video URL (or 'quit' to exit): https://x.com/user/status/123...
 ```
 
 ## 🏗️ Architecture
 
-XDN uses a multi-strategy approach to ensure reliable video extraction:
+XDL uses a platform-specific approach for each supported site:
 
+### X/Twitter
 1. **Syndication API** - Primary method using Twitter's CDN endpoints
 2. **Web Scraping** - Fallback method with proper headers
-3. **HLS Support** - Handles both MP4 direct downloads and M3U8 streams
+
+### Rumble
+1. **JSON-LD Extraction** - Searches for video URLs in structured data
+2. **Embed Page Parsing** - Fallback to parsing embed pages
+
+### YouTube
+- **yt-dlp Integration** - Leverages the powerful yt-dlp tool for reliable YouTube downloads
 
 ### Technical Details
 
@@ -108,15 +126,33 @@ XDN uses a multi-strategy approach to ensure reliable video extraction:
 - .NET 9.0 Runtime (included in self-contained builds)
 - Internet connection
 - Write access to Downloads folder
+- **For YouTube**: [yt-dlp](https://github.com/yt-dlp/yt-dlp) must be installed
 
 ## ⚠️ Disclaimer
 
-This tool is for personal use only. Please respect content creators' rights and Twitter/X's Terms of Service:
+This tool is for personal use only. Please respect content creators' rights and the Terms of Service of each platform:
 
 - Only download videos you have permission to save
 - Don't use for mass downloading or automation
 - Respect copyright and intellectual property rights
-- This tool is not affiliated with X Corp. or Twitter
+- This tool is not affiliated with X Corp., Rumble, or YouTube
+
+## 🔄 Browser Extension
+
+XDL includes a browser extension for one-click video downloads. See the [extension folder](extension/) for details.
+
+### Update Extension
+
+To update the extension after making changes:
+
+```batch
+update-extension.bat
+```
+
+This will:
+1. Open your browser's extensions page
+2. Show you exactly where to click
+3. The extension reloads with your latest changes
 
 ## 🤝 Contributing
 
