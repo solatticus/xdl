@@ -39,7 +39,7 @@ function generateElementId(element) {
 }
 
 // Track processed elements with WeakMap for better memory management
-const processedElements = new WeakMap();
+let processedElements = new WeakMap();
 
 // Check if we're on a tweet page
 function isVideoTweet() {
