@@ -139,7 +139,22 @@ This tool is for personal use only. Please respect content creators' rights and 
 
 ## 🔄 Browser Extension
 
-XDL includes a browser extension for one-click video downloads. See the [extension folder](extension/) for details.
+XDL includes a browser extension for Chrome/Edge that adds download buttons directly to X/Twitter's interface.
+
+### Features
+- 🎯 **Download buttons** integrated into X/Twitter UI
+- 📱 **Timeline support** - Download videos from your feed
+- 🎬 **Video overlay buttons** - Floating download button on video players
+- 🚀 **One-click downloads** - No need to copy/paste URLs
+- 🔄 **Automatic updates** - Buttons appear as you browse
+
+### Installation
+
+1. Open Chrome or Edge
+2. Navigate to `chrome://extensions/` (or `edge://extensions/`)
+3. Enable "Developer mode" (toggle in top right)
+4. Click "Load unpacked"
+5. Select the `extension` folder from this repository
 
 ### Update Extension
 
@@ -153,6 +168,12 @@ This will:
 1. Open your browser's extensions page
 2. Show you exactly where to click
 3. The extension reloads with your latest changes
+
+### Technical Details
+- **Content Script** injection for seamless UI integration
+- **Background Script** handles download requests
+- **Duplicate Prevention** using WeakMap tracking and unique element IDs
+- **Dynamic Content Support** with MutationObserver for SPA navigation
 
 ## 🤝 Contributing
 
